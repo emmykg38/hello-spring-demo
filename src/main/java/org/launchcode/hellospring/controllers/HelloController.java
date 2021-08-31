@@ -19,15 +19,25 @@ public class HelloController {
         return "Goodbye, Spring!";
     }
 
+
     // Handles requests of the form /hello?name=LaunchCode
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
+    //added parameter model of type/class Model
+    //created variable greeting, which is used by hello.html template to display the text
+    /*added Model.addAttribute in order to implement the parameter, and named it variable = "greeting"
+        and then next to it, added the parameter greeting which is the object which contains the value
+        that the variable should have*/
+    //returned "hello", with hello referring to the hello in the hello template(hello.html)
+    //local variable (greeting) must match up with the second parameter in the addAttribute method
+    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
     public String helloWithQueryParam(@RequestParam String name, Model model) {
-        String greeting = "Hello, " + name + "!";
+        String greeting = "Hello " + name + "!";
         model.addAttribute("greeting", greeting);
         return "hello";
     }
 
+
    // Handles requests of the form /hello/LaunchCode
+    //because it's the same view, we can use the same template
     @GetMapping("hello/{name}")
     public String helloWithPathParam(@PathVariable String name, Model model) {
         String greeting = "Hello, " + name + "!";
@@ -41,15 +51,22 @@ public class HelloController {
         return "form";
     }
 
+
     @GetMapping("hello-names")
-    public String helloNames(Model model){
+    public String helloNames(Model model) {
         List<String> names = new ArrayList<>();
         names.add("LaunchCode");
         names.add("Java");
-        names.add("JavaScript");
+        names.add("Emily");
+        names.add("Valerie");
+        names.add("Krystal");
+        names.add("Melanie");
+        names.add("Mike");
+        names.add("Ted");
         model.addAttribute("names", names);
         return "hello-list";
-
     }
+
+
 
 }
